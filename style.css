@@ -17,3 +17,18 @@
 @media(min-width:600px){.app-shell{height:min(920px,calc(100dvh - 40px));min-height:680px;margin:20px auto;border-radius:27px;border:5px solid #15271c}.statusbar{border-radius:22px 22px 0 0}.bottom-nav{border-radius:0 0 22px 22px}}
 @media(max-width:360px){.page-content{padding-left:15px;padding-right:15px}.home-hero,.policy-hero{margin-left:-15px;margin-right:-15px;padding-left:16px;padding-right:16px}.category{font-size:11px}.shop-card{grid-template-columns:78px 1fr;gap:9px}.shop-art{height:88px}.shop-actions button{font-size:10px}.home-hero h2{font-size:24px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* Header cleanup and local mock-data management controls */
+.topbar{padding-top:18px}
+.topline{justify-content:flex-start}
+.topline.center{justify-content:center}
+.record-controls{display:flex;gap:8px;justify-content:flex-end;margin-top:9px}
+.record-controls button{border:0;background:#eff8f2;color:#238f4a;border-radius:10px;padding:5px 10px;font-size:11px}
+.record-controls button+button{background:#f6f3f2;color:#9a6358}
+.job-card .record-controls{margin-top:8px}
+.featured-copy .record-controls{margin-top:6px}
+.policy-card .record-controls{margin-top:9px}
+.complaint-card .record-controls{margin-top:7px}
+.shop-detail{min-width:0}
+.shop-actions{flex-wrap:wrap}
+@media(min-width:600px){.app-shell{border-radius:27px;border:5px solid #15271c}.bottom-nav{border-radius:0 0 22px 22px}}

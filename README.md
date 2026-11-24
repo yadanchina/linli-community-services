@@ -14,6 +14,7 @@
 
 - `assets/logo.jpg`：告庄社区橙色标识，用于页头和个人中心。
 - `assets/complaint-platform.jpg`：平安版纳平台标识，仅用于纠纷调解入口。
+- `assets/pingan-banna-miniapp.png`：平安版纳官方公开小程序码，用于微信内长按识别打开。
 - `assets/gaozhuang-night.jpg`、`assets/dai-brocade.jpg`、`assets/dai-market.jpg`：告庄夜景、傣锦与星光夜市主题配图。
 - `assets/policy-community.jpg`、`assets/policy-elderly.jpg`、`assets/policy-renewal.jpg`：政策宣讲、助老服务与老旧小区改造配图。
 - `assets/activity-river.jpg`、`assets/activity-garden.jpg`、`assets/activity-elderly.jpg`、`assets/activity-water.jpg`：净滩、社区花园、助老探访与泼水节志愿活动配图。
@@ -22,7 +23,7 @@
 
 ## 平安版纳入口
 
-点击页面中的入口会先弹出“打开小程序”确认提示，确认后通过 `#小程序://平安版纳/6lCBR3ZWjqYodKk` 链接打开。该链接需要在微信内使用。
+点击页面中的入口会弹出示意小程序码，可在微信中长按识别或保存后扫码打开；无法识别时可在微信中搜索“平安版纳”。小程序码取自勐海县官方公开通告《关于在全县全面开展应用“平安版纳”数字身份认证的通告》。
 
 ## 在线访问
 

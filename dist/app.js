@@ -1158,9 +1158,9 @@ function openMiniAppPrompt() {
   showModal('打开小程序', `<div class="gov-modal">
     <span class="gov-modal-icon"><img src="./assets/complaint-platform.jpg" alt="平安版纳"></span>
     <h3>打开“平安版纳”小程序</h3>
-    <p>将前往政府基层纠纷调解平台，可进行诉求上报、工单查询与办结反馈。</p>
-    <a class="primary-btn miniapp-open-btn" href="${MINIAPP_LINK}">打开小程序</a>
-    <small>本地投诉登记仍会保留，可继续在“我的投诉”中查看。</small>
+    <p>在微信中长按识别下方小程序码，或保存图片后使用微信扫一扫。</p>
+    <div class="miniapp-qr"><img src="./assets/pingan-banna-miniapp.png" alt="平安版纳小程序码"></div>
+    <small>如无法识别，请在微信中搜索“平安版纳”。本地投诉登记仍会保留。</small>
   </div>`);
 }
 

@@ -1403,15 +1403,23 @@ body{
 .gov-modal h3{margin:0 0 5px;font-size:16px}
 .gov-modal p{margin:0;color:#85918b;font-size:10.5px;line-height:1.7}
 .gov-modal small{display:block;margin-top:10px;color:#a0a8a3;font-size:9px;line-height:1.6}
-.miniapp-open-btn{
+.miniapp-qr{
   display:flex;
   align-items:center;
   justify-content:center;
-  width:100%;
-  margin-top:15px;
-  padding:11px 16px;
-  border-radius:22px;
-  text-decoration:none;
+  margin:14px 0 2px;
+  padding:10px;
+  border:1px solid #e3edf4;
+  border-radius:18px;
+  background:#f3f7fa;
+}
+.miniapp-qr img{
+  display:block;
+  width:190px;
+  height:190px;
+  border-radius:12px;
+  background:#fff;
+  object-fit:contain;
 }
 
 .mini-link-box{

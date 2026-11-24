@@ -445,7 +445,7 @@ function complaintPage() {
       <p>本地登记诉求，也可前往平安版纳同步上报</p>
     </section>
     <button class="hero-shortcut" data-action="new-complaint"><span class="round-icon">${svg('complaint')}</span><span><strong>登记一条社区诉求</strong><small>支持填写纠纷码 · 30秒完成</small></span><span class="arrow">›</span></button>
-    <a class="gov-jump-card" href="${MINIAPP_LINK}">
+    <a class="gov-jump-card" href="${MINIAPP_LINK}" data-miniapp>
       <span class="gov-jump-icon"><img src="./assets/complaint-platform.jpg" alt="平安版纳"></span>
       <span class="gov-jump-copy"><strong>平安版纳 · 政府纠纷调解平台</strong><small>一键上报、工单流转、进度跟踪与办结反馈</small></span>
       <span class="gov-jump-arrow">${svg('external')}</span>
@@ -525,7 +525,7 @@ function minePage() {
       <button data-points-jump="orders"><span class="mine-menu-icon">${svg('gift')}</span><span><strong>兑换记录</strong><small>查看实物与虚拟券核销码</small></span><i>${svg('chevron')}</i></button>
       <button data-action="points-rules"><span class="mine-menu-icon">${svg('shield')}</span><span><strong>积分规则</strong><small>仅志愿活动签到可获得积分</small></span><i>${svg('chevron')}</i></button>
       <button data-page="shop"><span class="mine-menu-icon">${svg('shop')}</span><span><strong>商铺服务</strong><small>社区周边出租、转让与求租</small></span><i>${svg('chevron')}</i></button>
-      <a href="${MINIAPP_LINK}"><span class="mine-menu-icon blue"><img src="./assets/complaint-platform.jpg" alt="平安版纳"></span><span><strong>平安版纳</strong><small>政府基层纠纷调解平台</small></span><i>${svg('external')}</i></a>
+      <a href="${MINIAPP_LINK}" data-miniapp><span class="mine-menu-icon blue"><img src="./assets/complaint-platform.jpg" alt="平安版纳"></span><span><strong>平安版纳</strong><small>政府基层纠纷调解平台</small></span><i>${svg('external')}</i></a>
     </div>
     ${registrations.length ? `<div class="section-head"><h2>最近报名</h2><button class="more" data-page="activity">全部 ${registrations.length} 场 ›</button></div><div class="my-signup-list">${registrations.slice(0, 2).map(({ registration, activity }) => {
       const meta = activityMeta(activity);
@@ -741,6 +741,12 @@ function bind() {
   });
   document.querySelectorAll('[data-redeem]').forEach((button) => {
     button.onclick = () => openRedeem(button.dataset.redeem);
+  });
+  document.querySelectorAll('[data-miniapp]').forEach((link) => {
+    link.onclick = (event) => {
+      event.preventDefault();
+      openMiniAppPrompt();
+    };
   });
 }
 
@@ -1146,6 +1152,16 @@ function openRedeem(rewardId) {
     render();
     showModal('兑换成功', `<div class="redeem-success">${svg('check')}<h3>${esc(order.title)}</h3><p>${order.type === '实物' ? '请到告庄社区服务中心领取' : '请在有效期内使用虚拟券'}</p><div class="verify-code"><span>核销码</span><strong>${esc(order.verifyCode)}</strong></div><small>订单号 ${esc(order.code)} · 已扣减 ${order.cost} 积分</small></div>`);
   };
+}
+
+function openMiniAppPrompt() {
+  showModal('打开小程序', `<div class="gov-modal">
+    <span class="gov-modal-icon"><img src="./assets/complaint-platform.jpg" alt="平安版纳"></span>
+    <h3>打开“平安版纳”小程序</h3>
+    <p>将前往政府基层纠纷调解平台，可进行诉求上报、工单查询与办结反馈。</p>
+    <a class="primary-btn miniapp-open-btn" href="${MINIAPP_LINK}">打开小程序</a>
+    <small>本地投诉登记仍会保留，可继续在“我的投诉”中查看。</small>
+  </div>`);
 }
 
 function showToast(text) {

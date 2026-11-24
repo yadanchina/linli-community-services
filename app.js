@@ -430,7 +430,7 @@ function pageBody() {
   })[state.page]();
 }
 
-const controls = (kind, item) => `<div class="record-controls"><button data-edit="${kind}:${item.id}">编辑</button><button data-delete="${kind}:${item.id}">删除</button></div>`;
+const controls = (kind, item) => kind === 'policies' ? '' : `<div class="record-controls"><button data-edit="${kind}:${item.id}">编辑</button><button data-delete="${kind}:${item.id}">删除</button></div>`;
 
 function complaintCard(complaint) {
   return `<article class="card complaint-card"><div class="complaint-meta"><h3>${esc(complaint.title)}</h3><span class="status-pill">${esc(complaint.status)}</span></div><p>${esc(complaint.desc)}</p>${complaint.disputeCode ? `<p class="dispute-line"><span>纠纷码</span>${esc(complaint.disputeCode)}</p>` : ''}${controls('complaints', complaint)}</article>`;
@@ -445,7 +445,7 @@ function complaintPage() {
       <p>本地登记诉求，也可前往平安版纳同步上报</p>
     </section>
     <button class="hero-shortcut" data-action="new-complaint"><span class="round-icon">${svg('complaint')}</span><span><strong>登记一条社区诉求</strong><small>支持填写纠纷码 · 30秒完成</small></span><span class="arrow">›</span></button>
-    <a class="gov-jump-card" href="${MINIAPP_LINK}" data-miniapp="${MINIAPP_LINK}">
+    <a class="gov-jump-card" href="${MINIAPP_LINK}">
       <span class="gov-jump-icon"><img src="./assets/complaint-platform.jpg" alt="平安版纳"></span>
       <span class="gov-jump-copy"><strong>平安版纳 · 政府纠纷调解平台</strong><small>一键上报、工单流转、进度跟踪与办结反馈</small></span>
       <span class="gov-jump-arrow">${svg('external')}</span>
@@ -471,7 +471,7 @@ function policyHomeSection() {
   const preferredFeature = data.policies[2];
   const activeFeature = filtered.includes(preferredFeature) ? preferredFeature : filtered.find((policy) => policy.image) || null;
   return `<section class="policy-home-block">
-    <div class="section-head"><h2>政策速递</h2><div class="head-actions"><span class="source-note">为您筛选 ${filtered.length} 条</span><button class="more" data-action="new-policy">＋新增</button></div></div>
+    <div class="section-head"><h2>政策速递</h2><div class="head-actions"><span class="source-note">为您筛选 ${filtered.length} 条</span></div></div>
     <label class="searchbox policy-home-search">${svg('search')}<input id="policy-search" placeholder="搜索政策关键词，如「老旧小区改造」" value="${esc(state.policyQuery)}"></label>
     <div class="policy-tabs home-policy-tabs">${['全部', '国家', '省级', '市级', '社区'].map((item) => `<button class="policy-tab ${state.policyLevel === item ? 'active' : ''}" data-level="${item}">${item}</button>`).join('')}</div>
     ${activeFeature ? `<article class="card featured-policy policy-home-feature"><div class="featured-cover ${activeFeature.image ? 'has-image' : ''}">${activeFeature.image ? `<img src="${activeFeature.image}" alt="${esc(activeFeature.imageAlt || activeFeature.title)}" loading="lazy"><span class="featured-cover-shade"></span>` : ''}<span class="tag">权威解读 · 图文</span><h3>${esc(activeFeature.title)}</h3></div><div class="featured-copy">${esc(activeFeature.desc)}<div class="featured-foot"><span class="tag">${esc(activeFeature.level)}</span><span class="tag orange">热读 2.1万</span><span class="policy-date">${esc(activeFeature.date)}</span></div>${controls('policies', activeFeature)}</div></article>` : ''}
@@ -525,7 +525,7 @@ function minePage() {
       <button data-points-jump="orders"><span class="mine-menu-icon">${svg('gift')}</span><span><strong>兑换记录</strong><small>查看实物与虚拟券核销码</small></span><i>${svg('chevron')}</i></button>
       <button data-action="points-rules"><span class="mine-menu-icon">${svg('shield')}</span><span><strong>积分规则</strong><small>仅志愿活动签到可获得积分</small></span><i>${svg('chevron')}</i></button>
       <button data-page="shop"><span class="mine-menu-icon">${svg('shop')}</span><span><strong>商铺服务</strong><small>社区周边出租、转让与求租</small></span><i>${svg('chevron')}</i></button>
-      <a href="${MINIAPP_LINK}" data-miniapp="${MINIAPP_LINK}"><span class="mine-menu-icon blue"><img src="./assets/complaint-platform.jpg" alt="平安版纳"></span><span><strong>平安版纳</strong><small>政府基层纠纷调解平台</small></span><i>${svg('external')}</i></a>
+      <a href="${MINIAPP_LINK}"><span class="mine-menu-icon blue"><img src="./assets/complaint-platform.jpg" alt="平安版纳"></span><span><strong>平安版纳</strong><small>政府基层纠纷调解平台</small></span><i>${svg('external')}</i></a>
     </div>
     ${registrations.length ? `<div class="section-head"><h2>最近报名</h2><button class="more" data-page="activity">全部 ${registrations.length} 场 ›</button></div><div class="my-signup-list">${registrations.slice(0, 2).map(({ registration, activity }) => {
       const meta = activityMeta(activity);
@@ -742,19 +742,12 @@ function bind() {
   document.querySelectorAll('[data-redeem]').forEach((button) => {
     button.onclick = () => openRedeem(button.dataset.redeem);
   });
-  document.querySelectorAll('[data-miniapp]').forEach((link) => {
-    link.onclick = (event) => {
-      event.preventDefault();
-      openMiniApp();
-    };
-  });
 }
 
 function action(name) {
   if (name === 'new-complaint') openEditor('complaints');
   else if (name === 'post-shop') openEditor('shops');
   else if (name === 'post-job') openEditor('jobs');
-  else if (name === 'new-policy') openEditor('policies');
   else if (name === 'new-activity') openEditor('activities');
   else if (name === 'flow') showModal('办理流程', '<p class="detail-text">1. 居民提交诉求并填写纠纷码<br>2. 社区管理员核实并分派给对应网格员<br>3. 网格员联系处理并上传结果<br>4. 同步至平安版纳平台，居民查看办结反馈<br>5. 居民确认处理结果，诉求办结</p>');
   else if (name === 'all-complaints') showModal('我的投诉', data.complaints.map(complaintCard).join('') || '<p class="detail-text">还没有投诉记录</p>');
@@ -771,10 +764,6 @@ function openEditor(kind, id = null, defaults = {}) {
     complaints: {
       title: '投诉',
       fields: [['title', '问题标题'], ['desc', '问题描述', 'textarea'], ['disputeCode', '纠纷码（选填）'], ['status', '处理状态', 'select', ['待分办', '处理中', '已办结']]]
-    },
-    policies: {
-      title: '政策',
-      fields: [['title', '政策标题'], ['desc', '政策内容', 'textarea'], ['scope', '政策级别', 'select', ['国家', '省级', '市级', '社区']], ['date', '发布日期']]
     },
     jobs: {
       title: '零工岗位',
@@ -937,7 +926,6 @@ function showModal(title, body) {
         };
       } else {
         entry = { ...fields };
-        if (kind === 'policies') entry.level = { 国家: '国家政策', 省级: '省级政策', 市级: '市级政策', 社区: '社区福利' }[entry.scope];
         if (kind === 'jobs' || kind === 'shops') entry.tags = (fields.tagsText || '').split(/[、,，]/).map((item) => item.trim()).filter(Boolean);
         delete entry.tagsText;
         if (kind === 'shops') {
@@ -1157,27 +1145,6 @@ function openRedeem(rewardId) {
     root.innerHTML = '';
     render();
     showModal('兑换成功', `<div class="redeem-success">${svg('check')}<h3>${esc(order.title)}</h3><p>${order.type === '实物' ? '请到告庄社区服务中心领取' : '请在有效期内使用虚拟券'}</p><div class="verify-code"><span>核销码</span><strong>${esc(order.verifyCode)}</strong></div><small>订单号 ${esc(order.code)} · 已扣减 ${order.cost} 积分</small></div>`);
-  };
-}
-
-function openMiniApp() {
-  const isWeChat = /MicroMessenger/i.test(navigator.userAgent);
-  if (isWeChat) {
-    try {
-      window.location.assign(MINIAPP_LINK);
-    } catch {}
-  }
-  const intro = isWeChat
-    ? '若微信未自动打开，请复制下方小程序链接，在微信聊天中粘贴并打开“平安版纳”。'
-    : '当前为普通浏览器预览。复制下方小程序链接，在微信中打开即可进入“平安版纳”。';
-  const root = showModal('前往平安版纳', '<div class="gov-modal"><span class="gov-modal-icon"><img src="./assets/complaint-platform.jpg" alt="平安版纳"></span><h3>政府基层纠纷调解平台</h3><p>' + intro + '</p><div class="mini-link-box">' + esc(MINIAPP_LINK) + '</div><button class="primary-btn" data-copy-miniapp="' + esc(MINIAPP_LINK) + '">复制小程序链接</button><small>本地投诉登记仍会保留，可继续在“我的投诉”中查看。</small></div>');
-  root.querySelector('[data-copy-miniapp]').onclick = async () => {
-    try {
-      await navigator.clipboard.writeText(MINIAPP_LINK);
-      showToast('链接已复制，请在微信中打开');
-    } catch {
-      showToast('请长按上方链接复制');
-    }
   };
 }
 

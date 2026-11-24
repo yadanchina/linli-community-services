@@ -26,8 +26,6 @@
 .record-controls button{border:0;background:#eff8f2;color:#238f4a;border-radius:10px;padding:5px 10px;font-size:11px}
 .record-controls button+button{background:#f6f3f2;color:#9a6358}
 .job-card .record-controls{margin-top:8px}
-.featured-copy .record-controls{margin-top:6px}
-.policy-card .record-controls{margin-top:9px}
 .complaint-card .record-controls{margin-top:7px}
 .shop-detail{min-width:0}
 .shop-actions{flex-wrap:wrap}
